@@ -1,0 +1,60 @@
+## Jenkins Installation
+Lauch an ec2 Instance with instance type t2.medium 
+
+sudo su -
+
+yum install wget -y
+
+sudo yum install java-11-openjdk java-11-openjdk-devel -y
+
+java -version
+
+sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo       ----->Downloading jenkins and keeping it in the                                                                                                           "/etc/yum.repos.d/jenkins.repo"
+   
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key ----> command is used to import the GPG key (public key) for the Jenkins repository on Red                                                                                                             Hat-based systems
+
+yum install jenkins -y
+
+systemctl enable jenkins
+
+systemctl start jenkins
+
+systemctl status jenkins
+
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+now configure sonarqube in pom.xml uder <properties>
+
+<properties>
+
+<sonar.host.url>http://65.2.57.231:9000/</sonar.host.url>    <------sonarqube url
+		<sonar.login>squ_b556b128c311f19bf31bb2d43e6c5e918730b9bf</sonar.login>   <-------token of sonaeqube 
+
+<properties>
+----------------------------------------------------------------------------------------------------------------------------------
+
+now configure nexus repository in pom.xml   < repository tag >
+
+ <repository>
+	      <id>nexus</id>
+	      <name>Mithun Technologies Releases Nexus Repository</name>   <-------name what we want
+	      <url>http://65.0.109.18:8081/repository/maven-releases/</url>     <---release repo url
+	    </repository>
+	    
+	    <snapshotRepository>
+	      <url>http://65.0.109.18:8081/repository/maven-snapshots/</url>    <----snapshot repo url
+	    </snapshotRepository>
+
+
+ configure nexus credential in settings.xml  under < server tag > 
+ 
+     <server>
+	      <id>nexus</id>
+	      <username>admin<username/>
+	      <password>sarim123<password/>
+     <server>
+	      
+
+
+
