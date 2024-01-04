@@ -1,0 +1,86 @@
+        
+                             
+                            **********  MAVEN INSTALLATION   ***********
+
+ 
+
+    # 4gb.RAM required for maven installation & prerequisit is java (open or oracle, IBM not suppoeted.)
+
+
+  wget https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.rpm
+
+  rpm -Uv jdk-17_linux-x64_bin.rpm
+
+  java --version
+
+  wget https://dlcdn.apache.org/maven/maven-3/3.9.5/binaries/apache-maven-3.9.5-bin.tar.gz
+
+  ls
+
+  tar -zxvf  apache-maven-3.9.5-bin.tar.gz
+
+  mvn -version     <------u found error have to set environment first.
+
+  readlink -f $(which java)  <------(take a path of java)
+
+
+  cd apache-maven-3.9.5
+
+  pwd   (take a path of maven)
+
+  vi .bash_profile
+
+    JAVA_HOME='/usr/lib/jvm/jdk-17-oracle-x64/bin/java'
+  PATH="$JAVA_HOME/bin:$PATH"
+  export PATH
+
+  M2_HOME='/root/apache-maven-3.9.5'
+  PATH="$M2_HOME/bin:$PATH"
+  export PATH
+
+  
+
+  source .bash_profile
+   
+   mvn -version
+   
+
+   sudo yum install git -y
+
+   git clone https://github.com/MithunTechnologiesDevOps/maven-standalone-application.git
+
+
+   mvn package                <------ you get error so first you have to go in maven-standalone-application
+
+
+   cd maven-standalone-application
+
+
+   mvn package                <------ first time it take time to download artifactories  from central
+
+
+   ls                         <--------- then u see target directoty 
+
+
+   cd target                 ( It is the default output directory where Maven places the build artifacts during the build process.
+                               It contains compiled classes (*.class files), packaged artifacts (JAR, WAR, etc.).
+
+   
+
+   mvn clean package          <----it clean old one and take new artifactories
+   
+
+   mvn clean 
+
+
+
+
+   ls -a
+
+   cd .m2    <-------------in .m2 u found repository
+
+ NOTE:
+    The target directory is specific to each Maven project and holds the output of the build process, while the .m2 directory is a global repository on the user's system where Maven stores downloaded dependencies needed for building various projects. 
+  
+
+    settings.xml   (have to find where is this)
