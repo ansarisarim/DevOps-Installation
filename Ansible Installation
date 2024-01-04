@@ -1,0 +1,71 @@
+#Create 3 servers (I Ansible Server , 2 Host Server) with thsi ami "Red Hat Enterprise Linux 8 (HVM), SSD Volume Type"
+
+#Login to the m/c as root and create "ansible" user in all the 3 servers and provide suod access to the new created user in visudo 
+
+useradd ansible
+useradd ansible
+visudo
+
+vi /etc/ssh/sshd_config ---->Change the password authentication to no from --> yes and restart the service in all the 3 servers
+
+service sshd.service restart 
+
+su ansible -     -->Switch to the ansible user
+
+sudo yum install python3 -y   -->Install python only on ansible server 
+
+python3 --version
+
+sudo alternatives --set /usr/bin/python3      
+
+sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm -y      -->We will install repository and
+
+ after that we will insatll the                     ansible from the repository 
+
+
+sudo yum install ansible -y
+
+ansible --version
+
+#Generate SSH key in ansible server && Copy it to the both 2host m/c
+
+sudo su ansible -
+
+ssh-keygen  
+
+ssh-copy-id ansible@172.31.7.176           ---->We are copying this key to the host m/c 
+
+ssh-copy-id ansible@172.31.4.102
+
+#Configure the host in the host Inventory file
+
+172.31.7.176
+172.31.4.102
+
+sudo vi /etc/ansible/hosts
+
+ansible all -m ping
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
