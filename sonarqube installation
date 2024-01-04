@@ -1,0 +1,74 @@
+####################################SONARQUBE INSTALLATION############################################
+
+#Launch an ec2 machine of rhel linux and with 2GB ram && connect to putty 
+
+sudo su -
+
+yum update -y 
+
+cd /opt
+
+yum install wget -y 
+
+yum install unzip -y
+
+wget https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.tar.gz
+
+
+tar -xvzf jdk-17_linux-x64_bin.tar.gz
+
+wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-9.9.3.79811.zip
+
+unzip sonarqube-9.9.3.79811.zip
+
+cd
+
+vi .bash_profile     ------>Paste the below line in .bash_profile to set the environment.
+
+JAVA_HOME='/root/jdk-17.0.9'
+PATH="$JAVA_HOME/bin:$PATH"
+export PATH
+
+export SONAR_JAVA_PATH=/opt/jdk-17.0.9/bin/java
+
+source .bash_profile
+
+useradd sonar 
+
+sonar   ALL=(ALL)  ALL  <---add this line in visudo---> visudo 
+
+chown -R sonar:sonar /opt/sonarqube-9.9.3.79811
+
+chmod -R 775 /opt/sonarqube-9.9.3.79811
+
+su sonar -  
+
+#Run the sonar.sh with new user created 
+
+cd /opt/sonarqube-9.9.3.79811/bin/linux-x86-64/
+
+sh sonar.sh start
+
+sh sonar.sh status
+
+take the public ip of instance and access the sonarqube with the web browser
+
+pub-ip:9000
+
+######################TroubleShooting Point of Sonarqube server###############################################
+sonar service is not starting?
+
+a)make sure you need to change the ownership and group to /opt/sonarqube-7.6/ directory for sonar user.
+
+b)make sure you are trying to start sonar service with sonar user.
+
+c)check java is installed or not using java -version command
+
+Unable to access SonarQube server URL in browser?
+
+a)make sure port 9000 is opened in security groups AWS ec2 instance.
+
+Create SonarQube server as a sonar service
+
+###################################################################################################################
+
