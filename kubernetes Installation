@@ -1,0 +1,104 @@
+Lauch 3 Ec2 instance with Ubuntu Server ----------------------------------------------------------------------------------
+
+1 -Master t2.medium
+2 Worker t2.micro
+
+Connect to 3 machine -----------------------------------------------------------------------------------------------------
+--------------------------------------------COMMON FOR MASTER & SLAVES(Pre-Requisite START)----------------------------------------------------
+1#Switch to root user
+sudo su -
+
+2#Disabling Swap Memory
+because kubernetes official documentation refers to disabliiing it 
+Swap Memory - The data which is avaible n the ram and after the ram is full we swap the data of ram in the system storage
+swapoff -a
+sed -i / 'swap / s/^\(.*\)$/#\1/g' /etc/fstab
+
+3#Install packages. To install Kubernetes and containerd run these commands
+apt update -y
+
+sudo apt-get install -y apt-transport-https ca-certificates curl gpg
+
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.29/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+
+sudo mkdir -p -m 755 /etc/apt/keyrings
+
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.29/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.29/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+
+sudo apt-get update
+sudo apt-get install -y kubelet kubeadm kubectl containerd
+
+#apt-mark will hold prevent the package from being automatically upgraded or remove
+sudo apt-mark hold kubelet kubeadm kubectl containerd
+
+4#Configure Containerd Load the necessary modules for Containerd:
+
+cat <<EOF | sudo tee /etc/modules-load.d/containerd.conf
+overlay
+br_netfilter
+EOF
+
+Enable the kernel feature
+modprobe overlay
+modprobe br_netfilter
+
+5#Setup the required kernel parameters.(Enabling iptables)
+
+cat <<EOF | sudo tee /etc/sysctl.d/99-kubernetes-cri.conf
+net.bridge.bridge-nf-call-iptables = 1
+net.bridge.bridge-nf-call-ip6tables = 1
+net.ipv4.ip_forward = 1
+EOF
+
+sysctl --system
+
+6#Configure containerd as default conatiner runtime
+
+mkdir -p /etc/containerd
+containerd config default | sudo tee /etc/containerd/config.toml
+systemctl restart containerd
+
+7#Enabling kubellet service
+systemctl daemon-reload
+systemctl start kubelet
+systemctl status kubelet
+
+--------------------------------------------COMMON FOR MASTER & SLAVES(Pre-Requisite ENDS)-------------------------------------
+
+In Master Node Only-------------------------------------------------------------------------------------------------------
+
+sudo su -
+
+#Initialize Kubernates master by executing below commond
+kubeadm init
+
+#Exit root user & exeucte as normal user
+
+exit
+
+kubectl version -short
+
+#Craeting config file for kubectl
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+kubectl get nodes
+
+# To verify, if kubectl is working or not, run the following command.
+
+kubectl get pods -n kube-system -o wide 
+
+#You will notice from the previous command, that all the pods are running except one: ‘kube-dns’. For resolving this we will install a # pod network. To install the weave pod network, run the following command:
+
+kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
+
+kubectl get nodes
+
+kubectl get pods --all-namespaces
+
+# Get token
+
+kubeadm token create --print-join-command
