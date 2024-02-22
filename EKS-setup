@@ -1,0 +1,74 @@
+EKS Setup
+==========
+
+
+Prerequisites 
+---------------------
+	• AWS Account With Admin Privileges.
+	• Instance to manage/access EKS cluster using kubectl.
+	• AWS CLI access to use kubectl utility. 
+
+Step By Step Procedure Using AWS Console 
+---------------------------------------------------------------
+
+1. Create IAM Role For EKS Cluster.
+• EKS – Cluster 
+
+Roles	---> 	Create Role	---> Use Case = eks	---> EKS-cluster	---> Next	---> Create Role
+
+
+2. Create Dedicated VPC For EKS Cluster. Using CloudFormation. 
+
+https://s3.us-west-2.amazonaws.com/amazon-eks/cloudformation/2020-10-29/amazon-eks-vpc-private-subnets.yaml
+
+Create Stack	--->	use ^ this Aws s3 Url	---> Next	---> give the name & Next 	---> Next	---> Submit
+
+
+3. Create EKS Cluster.
+
+Create Cluster	---> Configure It		---> Select VPC & Security Group	--> Next		---> Next	---> Create
+
+
+4. Create IAM Role For EKS Worker Nodes.
+
+Roles	---> 	Create Role	---> Use Case = ec2	---> Next	---> Add these 3 policy 	---> Create Role
+
+• AmazonEKSWorkerNodePolicy
+• AmazonEKS_CNI_Policy
+• AmazonEC2ContainerRegistryReadOnly
+
+
+5. Create Worker Nodes.
+
+Select Cluster	---> Compute	---> Add Node Group	---> Add Name & IAM	--->  Set compute and scaling configuration	---> Specify networking (use only private IP)	& Configure remote access to node (Enable) 	---> Next 	---> Create
+
+
+6. Create An Instance (Normal) as k8s client
+
+	[1]	Install AWS CLI And kubectl. 
+
+sudo yum update -y
+sudo yum install unzip -y
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update
+aws --version
+
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+kubectl version --client
+
+	[2]	Configure AWS CLI using Root or IAM User Access Key & Secret Key. Or Attach IAM With Required Policies.
+
+aws configure			#configure it
+aws eks list-clusters
+
+aws eks update-kubeconfig --name <ClusterName> --region <RegionName> 
+
+1. Deploy Demo Application.
+
+
+
+
+
