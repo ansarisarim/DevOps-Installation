@@ -47,8 +47,9 @@ now configure nexus repository in pom.xml  in <distribution managment>  < reposi
 	    </snapshotRepository>
 
 
- configure nexus credential in settings.xml  under < server tag > 
- 
+ configure nexus credential in settings.xml  under < server tag >
+
+cd  /var/lib/jenkins/tools/hudson.tasks.Maven_MavenInstallation/maven-3.6.2/conf
      <server>
 	      <id>nexus</id>
 	      <username>admin<username/>
