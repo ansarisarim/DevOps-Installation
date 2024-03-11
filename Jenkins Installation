@@ -34,7 +34,7 @@ now configure sonarqube in pom.xml uder <properties>
 <properties>
 ----------------------------------------------------------------------------------------------------------------------------------
 
-now configure nexus repository in pom.xml   < repository tag >
+now configure nexus repository in pom.xml  in <distribution managment>  < repository tag >
 
  <repository>
 	      <id>nexus</id>
