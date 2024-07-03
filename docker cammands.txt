@@ -1,0 +1,34 @@
+docker run -it --name nginxcontainer nginx
+
+docker run -d --name nginxcontainer --rm nginx
+
+docker run -d --name ubuntucontainer --rm ubuntu -p 80:8080
+
+docker stop ubuntucontainer
+
+docker log ubuntucontainer
+
+docker exec -it ubuntucontainer bash
+
+docker exec  ubuntucontainer ls
+
+docker exec ubuntucontainer touch file1
+
+docker cp ubuntucontainer:file1 .
+
+docker cp file1 ubuntucontainer:/
+
+docker build -t image:01 .
+
+docker run -d --name container1 image:01 -p 8080:8080 --rm  
+
+docker log container1
+
+Dockerfile [WORKDIR /opt] this is working directory in container so have to make it persistent.
+
+docker run -d --name container1 image:01 -p 8080:8080 -v E.data:/opt  
+
+docker push devopsP/image:01 
+
+
+
