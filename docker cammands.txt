@@ -42,6 +42,8 @@ docker ps = shows the running container processes
 
 docker ps -a = shows all docker container
 
+docker port <containername>   (show how many port are connected with the container)
+
 docker images/image ls = shows all docker image present inside docker server
 
 docker create <imagename:tag>
