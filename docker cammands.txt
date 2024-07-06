@@ -1,34 +1,113 @@
-docker run -it --name nginxcontainer nginx
+ ============================================================================
 
-docker run -d --name nginxcontainer --rm nginx
+--name = to give a to container
 
-docker run -d --name ubuntucontainer --rm ubuntu -p 80:8080
+-d = to run a container in detached mode (run container in background)
 
-docker stop ubuntucontainer
+-e or -env = for passing environment variable
 
-docker log ubuntucontainer
+-p for port publish/forwarding/mapping (Hostport:Containerport)
 
-docker exec -it ubuntucontainer bash
+-P for default port publish/forwarding/mapping 
 
-docker exec  ubuntucontainer ls
+-it for getting interactive terminal of container
 
-docker exec ubuntucontainer touch file1
+-v/--volume = to attach an volume to container
 
-docker cp ubuntucontainer:file1 .
+--network for running a container in specified network
 
-docker cp file1 ubuntucontainer:/
+--volume-from for shared volume
 
-docker build -t image:01 .
+==================================================================================
 
-docker run -d --name container1 image:01 -p 8080:8080 --rm  
+docker info = docker information 
 
-docker log container1
+docker inspect <containername> = provide container information
 
-Dockerfile [WORKDIR /opt] this is working directory in container so have to make it persistent.
+docker network create <networkname> = for creating a private network
 
-docker run -d --name container1 image:01 -p 8080:8080 -v E.data:/opt  
+docker exec <containername> /ls /bin/bash
 
-docker push devopsP/image:01 
+docker version = 
+
+docker commit <conatinername> <registry/repo:tags> = create a new image from running container ( not best practice) 
+
+docker build --name <imagename:tag> .  (here . represent buldcontext) Dockerfile 
+
+docker build -f <filename> --name <imagename:tag> .   (in case of custom dockerfilename) any other name like sarim.txt
+
+docker system prune -a = it removes dangling images, stopped containers, volumes & network.
+
+docker ps = shows the running container processes
+
+docker ps -a = shows all docker container
+
+docker images/image ls = shows all docker image present inside docker server
+
+docker create <imagename:tag>
+
+docker run <imagename:tag>
+
+docker start <conatinername>
+
+docker stop <conatinername>
+
+docker rmi <image name>
+
+docker rm <container name> (it only works with stopped containers)
+
+docker images $(dangling=true)
 
 
+======================================================================================
+                                        Dockerfile
+======================================================================================
+
+FROM
+
+MAINTAINER
+
+ADD
+
+RUN
+
+COPY
+
+EXPOSE
+
+ENVIRONMENT
+
+WORKDIR
+
+CMD
+
+ENTRYPOINT
+
+LABEL
+
+ARG
+
+USER
+
+VOLUME
+
+------------------------
+
+--no-cache = it ignores cache memory of docker while building an image using dockerfile
+
+
+=============================================================================================
+                                    Docker-Compose
+=============================================================================================
+
+version: "3"
+
+services: 
+
+volume:
+
+networks:
+
+
+=============================================================================================
 
