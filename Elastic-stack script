@@ -1,0 +1,155 @@
+wget https://artifacts.elastic.co/downloads/elas
+
+$ wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.2.0-amd64.deb
+
+$ sudo dpkg -i elasticsearch-7.2.0-amd64.deb
+
+$ wget https://artifacts.elastic.co/downloads/kibana/kibana-7.2.0-amd64.deb
+
+$ sudo dpkg -i kibana-7.2.0-amd64.deb
+
+$ wget https://artifacts.elastic.co/downloads/logstash/logstash-7.2.0.deb
+
+9 $ sudo dpkg -i logstash-7.2.0.deb
+
+$ wget https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.2.0-amd64.deb
+ 
+$ sudo dpkg -i filebeat-7.2.0-amd64.deb
+
+$ wget https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.2.0-amd64.deb 
+
+$ sudo dpkg -i filebeat-7.2.0-amd64.deb
+
+$ sudo -i
+$ /etc/elasticsearch
+$ vi elasticsearch.yml
+
+
+
+
+
+
+ELASTICSEARCH 7.2.0 SETUP GUIDE (WSL/UBUNTU)
+
+This sequence of commands resolves common startup issues related to file naming, permissions, and default memory limits in a WSL/Ubuntu environment.
+
+--------------------------------------------------------------------------------
+STEP 0: INSTALLATION (Start Here)
+--------------------------------------------------------------------------------
+
+# Download the Debian package (if not already done)
+wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.2.0-amd64.deb
+
+# Install the package
+sudo dpkg -i elasticsearch-7.2.0-amd64.deb
+
+--------------------------------------------------------------------------------
+STEP 1: CONFIGURATION AND JVM FIXES
+--------------------------------------------------------------------------------
+
+# 1. Fix Config File Name (Must be .yml)
+sudo mv /etc/elasticsearch/elasticsearch.yaml /etc/elasticsearch/elasticsearch.yml
+
+# 2. Fix Heap Size (Crucial for WSL)
+# Open the JVM options file for editing:
+# sudo nano /etc/elasticsearch/jvm.options
+# Ensure the memory limits are set to 512m (or lower if needed):
+# -Xms512m
+# -Xmx512m
+
+# 3. Clean Configuration (Set essential parameters)
+# Open the main configuration file for editing:
+# sudo nano /etc/elasticsearch/elasticsearch.yml
+# Ensure content is clean YAML (use spaces, not tabs, after the colon):
+# cluster.name: my-application
+# node.name: node-1
+# network.host: 127.0.0.1
+# http.port: 9200
+
+--------------------------------------------------------------------------------
+STEP 2: DIRECTORY CREATION AND PERMISSIONS FIXES (CRITICAL)
+--------------------------------------------------------------------------------
+
+# 1. Create Missing Directories (Fixes 'No such file or directory' errors)
+sudo mkdir -p /usr/share/elasticsearch/data
+sudo mkdir -p /usr/share/elasticsearch/logs
+
+# 2. Set Correct Permissions (Fixes 'AccessDeniedException')
+# Grant ownership of data directory to the elasticsearch user
+sudo chown -R elasticsearch:elasticsearch /usr/share/elasticsearch/data
+
+# Grant ownership of logs directory to the elasticsearch user
+sudo chown -R elasticsearch:elasticsearch /usr/share/elasticsearch/logs
+
+--------------------------------------------------------------------------------
+STEP 3: START AND VERIFY
+--------------------------------------------------------------------------------
+
+# 1. Reload systemd manager and start the service
+sudo systemctl daemon-reload
+sudo systemctl start elasticsearch
+
+# 2. Check the service status
+sudo systemctl status elasticsearch
+# Expected result: Active: active (running)
+
+# 3. Verify connectivity (API is running)
+curl -X GET "localhost:9200"
+
+--------------------------------------------------------------------------------
+OPTIONAL: WSL RESOURCE INCREASE (If crash persists)
+--------------------------------------------------------------------------------
+
+# 1. Run this command in your Ubuntu/WSL shell to create the .wslconfig file:
+# NOTE: Replace 'Solv-IT' with your actual Windows username if needed.
+echo -e "[wsl2]\nprocessors=4\nmemory=4096MB\nswap=0" | sudo tee /mnt/c/Users/Solv-IT/.wslconfig
+
+# 2. Shut down the WSL service (Must be done in Windows PowerShell as Admin)
+wsl --shutdown
+
+# 3. Restart Ubuntu and try starting the service again.
+
+
+KIBANA
+
+/etc/kibana/kibana.yml
+
+sudo apt update
+sudo apt install -y apache2-utils
+
+/etc/nginx/httpaswd.users
+
+server {
+    listen 80;
+    server_name localhost 127.0.0.1;
+
+    auth_basic "Restricted Access";
+    auth_basic_user_file /etc/nginx/htpasswd.users;
+
+    location / {
+        proxy_pass http://localhost:5601;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+    }
+}
+
+
+http://127.0.0.1:5601/
+kibadmin
+sarim@123
+
+/etc/logstash/conf.d     <--- its file where we create pipeline.
+
+
+
+
+
+
+
+
+
+
+
+
