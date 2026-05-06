@@ -1,0 +1,406 @@
+
+>>> c=3.2
+>>> print(c)
+3.2
+>>> print(c,type(c))
+3.2 <class 'float'>
+
+--------------------------------------------------------
+>>> print(d,type(d))
+12 <class 'int'>
+>>> bin(12)
+'0b1100'
+>>> bin(4)
+'0b100'
+----------------------------------------------------------
+>>> f=2
+>>> bin(2)
+'0b10'
+>>> bin(f)
+'0b10'
+>>> oct(f)
+'0o2'
+--------------------------------------------------------------
+
+>>> a=0xac
+>>> print(a,type(a))
+172 <class 'int'>
+
+hex(172)
+0xac
+--------------------------------------------------------------------
+ >>> print (3045)
+3045
+>>> hex(3045)
+'0xbe5'
+>>> oct(3045)
+'0o5745'
+>>> bin(0o5745)
+'0b101111100101'
+
+--------------------------------------------------------------------
+
+a = 2.3j
+print(a)          # Output: 2.3j          ← print mein sirf imaginary dikhta hai
+print(a.real)     # 0.0
+print(a.imag)     # 2.3
+
+b = 3 + 2.3j
+print(b)          # (3+2.3j)           ← dono parts dikhte hain
+print(b.real)     # 3.0
+print(b.imag)     # 2.3
+
+----------------------------------------------------------------------------
+>>> a="a b c"
+>>> print(a, type(a))
+a b c <class 'str'>
+
+>>> b= "kv rao is the GOOD Teacher"
+>>> print(b, type(b))
+kv rao is the GOOD Teacher <class 'str'>
+
+>>> address= '22/B/07 Govandi Mumbai 400043'
+>>> print(address, type(address))
+22/B/07 Govandi Mumbai 400043 <class 'str'>
+
+MULTI LINE STRING
+
+>>> add1=''' govandi mumbai
+... shivagi Naga
+... road number 3'''
+
+>>> print (add1, type(add1))
+ govandi mumbai
+shivagi Naga
+road number 3 <class 'str'>
+
+>>> add2="""Noorbag Malegaon 423203
+... Nashik
+... maharashtra"""
+>>> print(add2, type (add2))
+Noorbag Malegaon 423203
+Nashik
+maharashtra <class 'str'> 
+
+
+
+>>> e='''data=2july
+... day=monnday
+... week=1'''
+>>> print(e,(e))
+data=2july
+day=monnday
+week=1 data=2july
+day=monnday
+week=1
+
+----------------------------------------------------------------------
+Indexing -ve and +ve
+>>> a="sarim"
+>>> a[-1]
+'m'
+>>> a[0]
+'s'
+
+-ve start with -1 =ve start with 0
+
+
+>>> s='ptyhon language'
+>>> s[6]
+' '
+>>> s[5]
+'n'
+>>> s[14]
+'e'
+>>> s[7]
+'l'
+>>> s[-9]
+' '
+
+'ptyhon language' [2]
+y
+
+'ptyhon language' [-1]
+e
+
+
+>>> "HYDRABAD"[3]
+'R'
+>>> "HYDRABAD"[03]
+  File "<python-input-68>", line 1
+    "HYDRABAD"[03]
+               ^
+SyntaxError: leading zeros in decimal integer literals are not permitted; use an 0o prefix for octal integers
+>>>
+
+
+NOTE: 0 leading values are not the decimal value 
+
+
+-----------------------------------------------------------------------------------------------------------------------------------
+str -ve and +ve Indexing 
+>>> s="PYTHON"
+>>> s[1:6]
+'YTHON'
+>>> s[1:6]
+'YTHON'
+>>> s[1:5]
+'YTHO'
+>>> s[4:3]
+''
+
+
+
+>>> s[-3:-2]
+'H'
+
+>>> s[-5:-1]
+
+>>> s[-1:-3]
+''
+>>> s[-3:-5]
+''
+>>> s[-5:-3]
+'YT'
+>>> s[3:3]
+''
+
+>>> s="HYDRABAD"
+>>> s[-6:-1]
+'DRABA'
+>>> s[-6:4]
+'DR'
+>>> s[0:-4]
+'HYDR'
+
+>>> s[6:-5]
+''
+>>> s[6:-4]
+''
+>>> s[6:-3]
+''
+>>> s[6]
+'A'
+>>> s[-6:5]
+'DRA'
+>>> s[-2:2]
+''
+>>> s[2:-2]
+'DRAB'
+>>> s[-2:-1]
+'A'
+
+>>> s="python"
+>>> s[2:-3]
+'t'
+>>> s[-2:1]
+''
+>>> print(s)
+python
+>>> s[2:1000000]
+'thon'
+>>> s[-1:-6]
+''
+>>> s[-6:-1]
+'pytho'
+
+>>> s[-10000:-1]
+'pytho'
+>>> s[-10000:-6]
+''
+
+>>> s[-10000:100000]
+'python'
+
+
+
+ if we donot specify the character it will take last character only.
+>>> s[0:]
+'python'
+>>> s[3:]
+hon
+>>> s[-6:]
+'python'
+>>> s[-1:]
+'n'
+
+>>> s[15:]
+''
+>>> s[6:]
+''
+>>> s[5:]
+'n'
+
+
+>>> s[-len('hyd'):]
+'hon'
+   
+KeyboardInterrupt
+>>> s[-len('abc'):]
+'hon'
+>>> s[-len('abcde'):]
+'ython'
+
+obj[:END] 
+
+ 
+
+
+>>> s[0:-100]
+''
+>>> s[0:-7]
+''
+>>> s[0:-6]
+''
+>>> s[0:-5]
+'p'
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+>>> print(b)
+2.0
+>>> c=(a.imag)
+>>> print(c)
+5.0
+>>> a="2+5j"
+>>> b(a.real)
+Traceback (most recent call last):
+  File "<python-input-13>", line 1, in <module>
+    b(a.real)
+AttributeError: 'str' object has no attribute 'real'
+
+>>> c=(a.imag)
+Traceback (most recent call last):
+  File "<python-input-15>", line 1, in <module>
+    c=(a.imag)
+       ^^^^^^
+AttributeError: 'str' object has no attribute 'imag'
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+>>> a=0
+>>> b=print(a,type(a))
+0 <class 'int'>
+>>> b=bool(a)
+>>> print(b,type(b))
+False <class 'bool'>
+>>> len(a)
+0
+
+>>> a="0"
+>>> b=print(a,type(a))
+0 <class 'str'>
+>>> b=bool(a)
+>>> c=print(b,type(b))
+True <class 'bool'>
+>>> len(a)
+1
+-----------------------------------------------
+complex into bool
+>>> a="0+0j"
+>>> print(a,type(a))
+0+0j <class 'str'>
+>>> len(a)
+4
+>>> bool(a)
+True
+
+>>> b=0+0j
+>>> bool(b)
+False
+
+
+
+
+-----------------------------------------------------------------------
+sting bool into complex   | Not possible
+>>> a="True"  <--- Treated as a alphabet.
+>>> b=complex(a)
+Traceback (most recent call last):
+  File "<python-input-30>", line 1, in <module>
+    b=complex(a)
+ValueError: complex() arg is a malformed string
+
+>>> a=True
+>>> b=complex(a)
+>>> print(b,type(b))
+(1+0j) <class 'complex'>
+--------------------------------------------------------------------------------
+string complex into complex
+>>> a="-2.4"
+>>> a=-2.4+6j
+>>> b=complex(a)
+>>> print(a,type(a))
+(-2.4+6j) <class 'complex'>
+>>>
+
+>>> c="-1.1-5.5j"
+>>> a=complex(c)
+>>> print(a,type(a))
+(-1.1-5.5j) <class 'complex'>
+
+-----------------------------------------------------------------------------------
+int to str
+
+>>> a=11
+>>> b=str(a)
+>>> print(b,type(b))
+11 <class 'str'>
+-------------------------------------------------------------------------------------
+Float to str
+
+>>> b=2.2
+>>> print(b,type(b))
+2.2 <class 'float'>
+>>> c=str(b)
+>>> print(c,type(c))
+2.2 <class 'str'>
+----------------------------------------------------------------------------------
+
+>>> a=True
+>>> print(a,type(a))
+True <class 'bool'>
+>>> b=str(a)
+>>> print(b,type(b))
+True <class 'str'>
+----------------------------------------------------------------------------------------
+>>> s=[12, 255, 22, 22, 44]
+>>> bytes(s)
+b'\x0c\xff\x16\x16,'
+>>> for value in s:
+...     print(value)
+...
+12
+255
+22
+22
+44
+>>> print(s)
+[12, 255, 22, 22, 44]
+>>> for value in s:
+...     print(s)
+...
+[12, 255, 22, 22, 44]
+[12, 255, 22, 22, 44]
+[12, 255, 22, 22, 44]
+[12, 255, 22, 22, 44]
+[12, 255, 22, 22, 44]
+
+
+
+>>> a=[12, 33, 67]
+>>> for value in a:
+...       print(value)
+...
+12
+33
+67
+>>> b=bytes(a)
+>>> for value in b:
+...      print (value)
+...
+12
+33
+67
+
